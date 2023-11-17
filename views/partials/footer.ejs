@@ -1,0 +1,32 @@
+    <footer>
+        <p>Copyright © Elli Turner-Bisset <span class="date"><%= date %></span></p>
+    </footer>
+</main>
+<script type="module" src="/index.js"></script>
+<script>
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+const recognition = new SpeechRecognition();
+
+recognition.interimResults = true;
+
+const mic = document.querySelector(".mic-btn");
+const words = document.querySelector(".noteArea");
+
+mic.addEventListener("click", (event) => {
+    recognition.start();
+   
+});
+
+recognition.addEventListener("result", (e) => {
+    const result = e.results[0][0].transcript;
+    console.log(result);
+    if (e.results[0][0].confidence > 0.9){
+        const newContent = document.createTextNode(result);
+        words.appendChild(newContent);
+    }
+    
+});
+</script>
+</body>
+</html>

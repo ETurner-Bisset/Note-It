@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+
+:root {
+    --red1-color: #f5543d;
+    --orange1-color: #f5753d;
+    --yellow1-color: #f5b13d;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Merriweather", serif;
+    background: linear-gradient(90deg, var(--red1-color), var(--orange1-color), var(--yellow1-color));
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow-y: scroll;
+}
+
+.container {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+}
+
+.main-title {
+    padding-top: 40px;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 50px;
+    text-align: center;
+}
+
+i {
+    margin: 10px;
+    color: #000;
+}
+
+.btn {
+    margin: 8px;
+}
+
+.btn:hover {
+    transform: scale(1.2);
+}
+
+form, .note {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 300px;
+    position: relative;
+    margin: 20px;
+}
+
+.note {
+    max-width: 250px;
+    margin: 20px auto;
+}
+
+label {
+    font-weight: bold;
+}
+
+main {
+    height: 100%;
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
+
+.note-buttons {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    background: transparent;
+}
+
+.edit-btn, .delete-btn {
+    box-shadow: none;
+    background: transparent;
+}
+
+.main-btn-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.new-note-btn {
+    width: 35%;
+}
+
+.new-notes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 100%;
+    width: 100%;
+}
+
+footer {
+    position: sticky;
+}
+
+.underline {
+    width: 100%;
+    border: 2-x solid #000;
+}
+
+textarea {
+    cursor: text;
+    caret-color: black;
+    padding-right: 3px;
+    padding-left: 3px;
+}
+
+.fa-microphone {
+    color: #fff;
+}
+
+.mic-btn:focus {
+    border: 2px solid var(--yellow1-color);
+}
+
+@media (max-width: 1170px) {
+    .new-notes {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 910px) {
+    .new-notes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 610px) {
+    .new-notes {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media (max-width: 400px) {
+
+}
+

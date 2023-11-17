@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+
+<h1>Login</h1>
+<ul>
+    <% if (messages.success_msg) { %>
+        <li><%= messages.success_msg %></li>
+    <% } %>
+</ul>
+
+<ul>
+    <% if(messages.error) { %>
+        <li><%= messages.error %></li>
+  <%  } %>
+</ul>
+<form action="/login" method="post">
+    <div class="mb-3">
+        <label for="exampleInputEmail" class="form-label">Email:</label>
+        <input type="email" name="username" id="exampleInputEmail" class="form-control" aria-describedby="emailHelp" autofocus>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputPassword" class="form-label">Password:</label>
+        <input type="password" name="password" id="exampleInputPassword" class="form-control" autofocus>
+    </div>
+    
+    <button type="submit" class="btn btn-dark">Submit</button>
+</form>
+<a href="/" class="btn btn-dark btn-lg" role="button" class="home-btn">Home</a>
+
+<%- include('partials/footer') %>
