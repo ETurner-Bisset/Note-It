@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 app.use(session({
-    secret: process.env.SECRET || "testSecret" ,
+    secret: process.env.SECRET ,
     resave: false,
     saveUninitialized: false
 }));
