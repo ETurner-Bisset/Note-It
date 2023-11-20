@@ -85,7 +85,7 @@ label {
 main {
     height: 100%;
     width: 90%;
-    margin: auto;
+    margin-top: 150px;
     display: flex;
     flex-direction: column;
     justify-content: center;
