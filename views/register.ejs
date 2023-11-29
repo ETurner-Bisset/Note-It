@@ -14,16 +14,18 @@
 <form action="/register" method="post">
     <div class="mb-3">
         <label for="exampleInputEmail" class="form-label">Email:</label>
-        <input type="email" name="username" id="exampleInputEmail" class="form-control" aria-describedby="emailHelp" autofocus>
+        <input type="email" name="username" id="exampleInputEmail" class="form-control " aria-describedby="emailHelp" autofocus>
         <div class="form-text" id="emailHelp">We'll never share your email with anyone else.</div>
     </div>
     <div class="mb-3">
         <label for="exampleInputPassword" class="form-label">Password:</label>
-        <input type="password" name="password" id="exampleInputPassword" class="form-control" autofocus>
+        <div class="password">
+        <input type="password" name="password" id="exampleInputPasswordRegister" class="form-control " autofocus><i id="togglePassword" class="fa-regular fa-eye-slash"></i>
+    </div>
     </div>
     <div class="mb-3">
         <label for="exampleInputPasswords" class="form-label">Confirm Password:</label>
-        <input type="password" name="password2" id="exampleInputPassword2" class="form-control" autofocus>
+        <input type="password" name="password2" id="exampleInputPassword2" class="form-control " autofocus>
     </div>
     <button type="submit" class="btn btn-dark">Submit</button>
 </form>

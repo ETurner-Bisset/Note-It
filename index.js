@@ -12,7 +12,7 @@ import intializePassport from "./passportConfig.js";
 intializePassport(passport);
 
 const app = express();
-const port = 8080;
+const port = 3000;
 
 const date = new Date().getFullYear();
 
@@ -64,7 +64,7 @@ app.get("/logout", (req, res) => {
         }
         res.redirect("/");
     })
-})
+});
 
 app.post("/register", async (req, res) => {
     const email = req.body.username;

@@ -47,6 +47,7 @@ body {
 i {
     margin: 10px;
     color: #000;
+    cursor: pointer;
 }
 
 .btn {
@@ -71,6 +72,37 @@ form, .note {
     max-width: 300px;
     position: relative;
     margin: 20px;
+}
+
+.password {
+    display: flex;
+    border: 1px solid grey;
+    padding: 1px;
+    border-radius: 0.375rem;
+}
+
+.password input {
+    flex-grow: 2;
+    border: none;
+}
+
+#exampleInputPasswordRegister {
+    border: none;
+}
+
+#exampleInputEmail, #exampleInputPassword2, #exampleInputPassword {
+    border: 1px solid grey; 
+    border-radius: 0.375rem;
+}
+
+#exampleInputEmail:focus, #exampleInputPassword2:focus, #exampleInputPassword:focus, #exampleInputPasswordRegister:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+button {
+    border: none;
+    background-color: transparent;
 }
 
 .note {

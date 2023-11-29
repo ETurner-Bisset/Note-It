@@ -4,29 +4,50 @@
 </main>
 <script type="module" src="/index.js"></script>
 <script>
+
+    // show password in register form
+    const input = document.getElementById("exampleInputPasswordRegister");
+        const togglePassword = document.querySelector("#togglePassword")
+        .addEventListener('click', (e) => {
+            const type = input.getAttribute("type") === "password" ? "text" : "password";
+            input.setAttribute("type", type);
+            e.target.classList.toggle("fa-eye");
+         });
+
+         
+        
+        const form = document.querySelector("form");
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+        });
+    
+    // Voice note feature
     window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-const recognition = new SpeechRecognition();
+    const recognition = new SpeechRecognition();
 
-recognition.interimResults = true;
+    recognition.interimResults = true;
 
-const mic = document.querySelector(".mic-btn");
-const words = document.querySelector(".noteArea");
+    const mic = document.querySelector(".mic-btn");
+    const words = document.querySelector(".noteArea");
 
-mic.addEventListener("click", (event) => {
-    recognition.start();
+    mic.addEventListener("click", (event) => {
+        recognition.start();
    
-});
+    });
 
-recognition.addEventListener("result", (e) => {
-    const result = e.results[0][0].transcript;
-    console.log(result);
-    if (e.results[0][0].confidence > 0.9){
-        const newContent = document.createTextNode(result);
-        words.appendChild(newContent);
-    }
+    recognition.addEventListener("result", (e) => {
+        const result = e.results[0][0].transcript;
+        console.log(result);
+        if (e.results[0][0].confidence > 0.9){
+            const newContent = document.createTextNode(result);
+            words.appendChild(newContent);
+        }
+    });
     
-});
+ 
+       
+    
 </script>
 </body>
 </html>
