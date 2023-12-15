@@ -22,7 +22,7 @@ const date = new Date().getFullYear();
 let done = false;
 
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static("."));
+app.use(express.static("public"));
 
 app.use(session({
     secret: process.env.SECRET ,
