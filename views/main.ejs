@@ -9,7 +9,15 @@
         <% if (locals.notes.length > 0) { %>
             <% notes.forEach((note) => { %>
                 <div class="note">
-                    <p><%= note.notes %></p>
+                    <h5><%= note.note_title %></h5>
+                    <ol>
+                        <% if (locals.list_items) { %>
+                            <% list_items.forEach(item)  { %>
+                                <li><%= item %></li>
+                           <%}%>
+                            
+                        <% } %>
+                    </ol>
                     <div class="note-buttons">
                         <form action="/edit" method="post" class="edit-btn">
                             <input type="hidden" name="noteId" value="<%= note.id %>">

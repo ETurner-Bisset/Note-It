@@ -4,7 +4,6 @@
 </main>
 <script type="module" src="/index.js"></script>
 <script>
-
 // show password in register form
 const input = document.getElementById("exampleInputPasswordRegister");
 const togglePassword = document.querySelector("#togglePassword")
@@ -22,19 +21,13 @@ const togglePassword = document.querySelector("#togglePassword")
 <script>
      // Voice note feature
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
 const recognition = new SpeechRecognition();
-
 recognition.interimResults = true;
-
 const mic = document.querySelector(".mic-btn");
-const words = document.querySelector(".noteArea");
-
+const words = document.querySelector(".words");
 mic.addEventListener("click", (event) => {
     recognition.start();
-
 });
-
 recognition.addEventListener("result", (e) => {
     const result = e.results[0][0].transcript;
     console.log(result);
@@ -43,9 +36,66 @@ recognition.addEventListener("result", (e) => {
         words.appendChild(newContent);
     }
 });
-
-
 </script>
-
+<!-- add new note -->
+<script>
+    const addBtnTitle = document.querySelector(".add-btn-title");
+    const listTitle = document.querySelector(".list-title");
+    const textTitle = document.querySelector(".hidden-title");
+    addBtnTitle.addEventListener("click", (e) => {
+        e.preventDefault();
+        listTitle.classList.toggle("hidden-title");
+        textTitle.classList.toggle("show");
+        textTitle.innerHTML = listTitle.value;
+    });
+    const addBtns = document.querySelectorAll(".add-btn");
+    const items = document.querySelectorAll(".item");
+    const texts = document.querySelectorAll(".hidden");
+    for (let i = 0; i < items.length; i++) {
+        addBtns[i].addEventListener("click", (e) => {
+            e.preventDefault();
+            items[i].classList.toggle("hidden");
+            texts[i].classList.toggle("show")
+            texts[i].innerHTML = items[i].value;
+        });
+    };
+</script>
+<!-- edit item function -->
+<script>
+    function handler(id) {
+        document.getElementById("item" + id).setAttribute("hidden", true)
+        document.getElementById("edit" + id).setAttribute("hidden", true)
+        document.getElementById("done" + id).removeAttribute("hidden")
+        document.getElementById("input" + id).removeAttribute("hidden")
+    }
+</script>
+<!-- add 1 additional item -->
+<script>
+    function addFiveItems() {
+        const items = document.getElementsByClassName("mb-3")
+        const newNote = document.querySelector(".additional-items");
+        const newItem = document.createElement("div");
+        for (let i = 5; i < items.length ; i++) {
+            newItem.classList.add("mb-3");
+            newItem.innerHTML = `
+            <label for="item${i}">${i}.</label>
+            <input type="text" name="item" id="item${i}" class="item" >
+            <p class="hidden"></p>
+            <button class="btn btn-dark add-btn">+</button>
+        `;
+        };
+        newNote.appendChild(newItem);
+    };
+</script>
+<!-- done status of single items -->
+<script>
+        const singleItems = document.querySelectorAll(".singleItem") ; 
+        singleItems.forEach((item) => {
+            if (item.getAttribute('value') === 'true') {
+                item.style.textDecoration = 'line-through';
+                item.style.color = 'red';
+            }
+        });
+</script>
 </body>
 </html>

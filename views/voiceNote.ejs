@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+
+<main>
+    <h1 class="main-title">Note It <i class="fa-solid fa-pen-nib"></i></h1>
+
+    <form action="/voiceNote" method="post" class="voice-note-form">
+        <h2>Add New Voice Note</h2>
+        <hr class="underline">
+        <div class="mb-3 note-title">
+            <label for="noteTitle">Note Title:</label>
+            <input type="text" name="noteTitle">
+        </div>
+        <div class="mb-3 note-body">
+            <label for="noteBody">Note:</label>
+            <textarea name="noteBody" class="words" id="noteBody" cols="30" rows="10"></textarea>
+            <button class="mic-btn btn btn-dark" type="button"><i class="fa-solid fa-microphone"></i></button>
+        </div>
+        <button type="submit" class="btn btn-dark" value="<%= id %>">Save Note</button>
+    </form>
+
+    <div class="main-btn-container">
+        <a href="/main" class="btn btn-dark btn-lg" role="button">Back</a>
+        <a href="/logout" class="btn btn-dark btn-lg" role="button">Logout</a>
+    </div>
+
+<%- include('partials/footer') %>

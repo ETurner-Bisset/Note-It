@@ -1,0 +1,136 @@
+<%- include('partials/header') %>
+
+<main>
+    <h1 class="main-title">Note It <i class="fa-solid fa-pen-nib"></i></h1>
+
+    <div class="note-container">
+        <h3>Example Note Title</h3>
+        <hr class="underline">
+        <ul>
+        <li class="single-item">
+            <form action="/exampleNote" method="get" class="note-form">
+                <div class="delete-single-item">
+            <input type="checkbox" name="checkbox" id="item"  onchange="this.form.submit()">
+            <p class="item" name="item" id="item1"><= Check me to mark off a item</p>
+        </div>
+        </form>
+        <div class="edit-delete-btns">
+        <form class="edit" action="/exampleNote" method="get">
+            <div class="tick">
+            <input type="hidden" name="updatedItemId" >
+            <input id="input1" type="text" name="updatedItem"  autocomplete="off"
+            autofocus="true" hidden="true" />
+            <button id="done1" class="edit" type="submit" name="noteId"  hidden>
+                <i class="fa-solid fa-check"></i>
+            </button>
+        </div>
+        
+        </form>
+        <button id="edit1" class="edit" onclick="handler('1')">
+            <i class="fa-solid fa-pencil"></i>
+        </button>
+        <form action="/exampleNote" method="get" class="delete-form">
+            <input type="hidden" name="noteId" >
+            <button class="delete" type="submit" name="itemId" ><i class="fa-solid fa-trash"></i></button>
+        </form>
+    </div>
+    </li>
+    <li class="single-item">
+        <form action="/checkOff" method="post" class="note-form">
+            <div class="delete-single-item">
+        <input type="checkbox" name="checkbox" id="item"  onchange="this.form.submit()">
+        <p class="item" name="item" id="item1">Click the pencil button to edit an item =></p>
+    </div>
+    </form>
+    <div class="edit-delete-btns">
+    <form class="edit" action="/edit" method="post">
+        <div class="tick">
+        <input type="hidden" name="updatedItemId" >
+        <input id="input1" type="text" name="updatedItem"  autocomplete="off"
+        autofocus="true" hidden="true" />
+        <button id="done1" class="edit" type="submit" name="noteId"  hidden>
+            <i class="fa-solid fa-check"></i>
+        </button>
+    </div>
+    
+    </form>
+    <button id="edit1" class="edit" onclick="handler('1')">
+        <i class="fa-solid fa-pencil"></i>
+    </button>
+    <form action="/delete" method="post" class="delete-form">
+        <input type="hidden" name="noteId" >
+        <button class="delete" type="submit" name="itemId" ><i class="fa-solid fa-trash"></i></button>
+    </form>
+</div>
+</li>
+<li class="single-item">
+    <form action="/checkOff" method="post" class="note-form">
+        <div class="delete-single-item">
+    <input type="checkbox" name="checkbox" id="item"  onchange="this.form.submit()">
+    <p class="item" name="item" id="item1">Click the bin to delete an item ==></p>
+</div>
+</form>
+<div class="edit-delete-btns">
+<form class="edit" action="/edit" method="post">
+    <div class="tick">
+    <input type="hidden" name="updatedItemId" >
+    <input id="input1" type="text" name="updatedItem"  autocomplete="off"
+    autofocus="true" hidden="true" />
+    <button id="done1" class="edit" type="submit" name="noteId"  hidden>
+        <i class="fa-solid fa-check"></i>
+    </button>
+</div>
+
+</form>
+<button id="edit1" class="edit" onclick="handler('1')">
+    <i class="fa-solid fa-pencil"></i>
+</button>
+<form action="/delete" method="post" class="delete-form">
+    <input type="hidden" name="noteId" >
+    <button class="delete" type="submit" name="itemId" ><i class="fa-solid fa-trash"></i></button>
+</form>
+</div>
+</li>
+<li class="single-item">
+    <form action="/checkOff" method="post" class="note-form">
+        <div class="delete-single-item">
+    <input type="checkbox" name="checkbox" id="item"  onchange="this.form.submit()">
+    <p class="item" name="item" id="item1">Click the 'Delete Note' button to delete the whole note.</p>
+</div>
+</form>
+<div class="edit-delete-btns">
+<form class="edit" action="/edit" method="post">
+    <div class="tick">
+    <input type="hidden" name="updatedItemId" >
+    <input id="input1" type="text" name="updatedItem"  autocomplete="off"
+    autofocus="true" hidden="true" />
+    <button id="done1" class="edit" type="submit" name="noteId"  hidden>
+        <i class="fa-solid fa-check"></i>
+    </button>
+</div>
+
+</form>
+<button id="edit1" class="edit" onclick="handler('1')">
+    <i class="fa-solid fa-pencil"></i>
+</button>
+<form action="/delete" method="post" class="delete-form">
+    <input type="hidden" name="noteId" >
+    <button class="delete" type="submit" name="itemId" ><i class="fa-solid fa-trash"></i></button>
+</form>
+</div>
+</li>
+        </ul>
+    </div>
+
+    <form action="/delete-note" method="post" class="delete-btn">
+        <input type="hidden" name="noteId" >
+        <button type="submit" class="btn btn-dark">Delete Note</button>
+    </form>
+    
+
+    <div class="main-btn-container">
+        <a href="/main" class="btn btn-dark btn-lg" role="button">Back</a>
+        <a href="/logout" class="btn btn-dark btn-lg" role="button">Logout</a>
+    </div>
+
+<%- include('partials/footer') %>

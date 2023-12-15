@@ -1,0 +1,42 @@
+<%- include('partials/header') %>
+
+
+<main>
+    <h1 class="main-title">Note It <i class="fa-solid fa-pen-nib"></i></h1>
+    <div class="new-note-btns">
+        <a href="/note" class="btn btn-dark btn-lg new-note-btn" role="button">Add New Note +</a>
+        <a href="/voiceNote" class="btn btn-dark btn-lg new-note-btn" role="button">Add New Voice Note +</a>
+    </div>
+        <form action="/search" method="post" class="search-form">
+            <div class="serach-container">
+                <label for="search">Search:</label>
+            <input type="text" name="searchTitle" id="search" class="search" placeholder="Enter note title...">
+            <button type="submit" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+        
+        </form>
+    </div>
+    <div class="new-notes">
+        <% if (locals.noteTitles.length > 0) { %>
+            <% noteTitles.forEach((title) => { %>
+                <ul>
+                    <li>
+                        <form action="/showNote" method="POST" class="showTitle">
+                            <button type="submit" class="btn btn-dark modal-btn" name="noteId" value="<%= title.id %>"><%= title.note_title %></button>
+                    </form>
+                </li>
+                </ul>
+                <% }) %>
+       <% } else { %>
+            <ul>
+                <li><a href="/exampleNote" class="btn btn-dark">Example Note Title</a></li>
+            </ul>
+       <% } %>
+    </div>
+
+    <div class="main-btn-container">
+        <a href="/" class="btn btn-dark btn-lg" role="button">Home</a>
+        <a href="/logout" class="btn btn-dark btn-lg" role="button">Logout</a>
+    </div>
+</main>
+
+<%- include('partials/footer') %>

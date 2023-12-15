@@ -7,11 +7,51 @@
         <h2>Add New Note</h2>
         <hr class="underline">
         <div class="mb-3">
-            <label for="exampleFormControlTextarea" class="form-label">Note:</label>
-            <textarea name="note" id="exampleFormControlTextarea" cols="30" rows="7" class="noteArea" autofocus></textarea>
-            <button class="mic-btn btn btn-dark" type="button"><i class="fa-solid fa-microphone"></i></button>
-            <button type="submit" class="btn btn-dark">Add +</button>
+            <label for="listTitle">Title: </label>
+            <input type="text" name="listTitle" id="listTitle" class="list-title" >
+            <p class="hidden-title"></p>
+            <button class="btn btn-dark add-btn-title">+</button>
+            
         </div>
+        <div class="mb-3">
+            <label for="item1">1.</label>
+            <input type="text" name="item" id="item1" class="item" >
+            <p class="hidden"></p>
+            <button class="btn btn-dark add-btn">+</button>
+            
+        </div>
+        <div class="mb-3">
+            <label for="item2">2.</label>
+            <input type="text" name="item" id="item2" class="item" >
+            <p class="hidden"></p>
+            <button  class="btn btn-dark add-btn">+</button>
+        </div>
+        <div class="mb-3">
+            <label for="item3">3.</label>
+            <input type="text" name="item" id="item3" class="item">
+            <p class="hidden"></p>
+            <button  class="btn btn-dark add-btn ">+</button>
+        </div>
+        <div class="mb-3">
+            <label for="item4">4.</label>
+            <input type="text" name="item" id="item4" class="item">
+            <p class="hidden"></p>
+            <button  class="btn btn-dark add-btn">+</button>
+        </div>
+        <div class="mb-3">
+            <label for="item5">5.</label>
+            <input type="text" name="item" id="item5" class="item" >
+            <p class="hidden"></p>
+            <button  class="btn btn-dark add-btn">+</button>
+        </div>
+        <div class="additional-items">
+
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-dark" type="button" onclick="addFiveItems()">More Items +</button>
+        </div>
+            <button type="submit" class="btn btn-dark" value="<%= id %>">Save Note</button>
+        
     </form>
 
     <div class="main-btn-container">

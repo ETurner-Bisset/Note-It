@@ -1,0 +1,78 @@
+<%- include('partials/header') %>
+
+<main>
+    <h1 class="main-title">Note It <i class="fa-solid fa-pen-nib"></i></h1>
+
+    
+        
+            <% if (locals.listItems)  { %>
+                <div class="note-container">
+                <h3><%= noteTitle %></h3>
+                <hr class="underline">
+                <ul>
+                <% listItems.forEach((item) => { %>
+                    <li class="single-item">
+                        <form action="/checkOff" method="post" class="note-form">
+                            <div class="delete-single-item">
+                        <input type="checkbox" name="checkbox" id="item" value="<%= item.list_item %>" onchange="this.form.submit()" >
+                        <p class="singleItem" name="item" id="item<%= item.id %>" value="<%= item.done %>" ><%= item.list_item %></p>
+                        <input type="hidden" name="noteId" value="<%= noteId %>">
+                        <input type="hidden" name="done" class="done" value="<%= item.done %>">
+                    </div>
+                    </form>
+                    <div class="edit-delete-btns">
+                    <form class="edit" action="/edit" method="post">
+                        <div class="tick">
+                        <input type="hidden" name="updatedItemId" value="<%= item.id %>">
+                        <input id="input<%=item.id%>" type="text" name="updatedItem" value="<%= item.list_item %>" autocomplete="off"
+                        autofocus="true" hidden="true" />
+                        <button id="done<%=item.id%>" class="edit" type="submit" name="noteId" value="<%= noteId %>" hidden>
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </div>
+                    
+                    </form>
+                    <button id="edit<%=item.id%>" class="edit" onclick="handler('<%=item.id%>')">
+                        <i class="fa-solid fa-pencil"></i>
+                    </button>
+                    <form action="/delete" method="post" class="delete-form">
+                        <input type="hidden" name="noteId" value="<%= item.note_id %>">
+                        <button class="delete" type="submit" name="itemId" value="<%= item.id %>"><i class="fa-solid fa-trash"></i></button>
+                    </form>
+                </div>
+                
+                </li>
+                
+            </ul>
+            
+                    <% }) %>
+                    <form action="/add" method="post" class="add-item">
+                        <div class="add-item">
+                        <input type="text" name="item" id="item" placeholder="Add new item..." autofocus="on">
+                        <button class="btn btn-dark" type="submit" name="noteId" value="<%= noteId %>">+</button>
+                    </div>
+                    </form>
+                </div>
+                <form action="/delete-note" method="post" class="delete-btn">
+                    <input type="hidden" name="noteId" value="<%= noteId %>">
+                    <button type="submit" class="btn btn-dark">Delete Note</button>
+                </form>  
+            
+            <% } else { %>
+            <div class="no-note">
+                <p>No note with that title found. Please try again.</p>
+            </div>
+        <% } %>
+            
+        
+        
+        
+    
+    
+
+    <div class="main-btn-container">
+        <a href="/main" class="btn btn-dark btn-lg" role="button">Back</a>
+        <a href="/logout" class="btn btn-dark btn-lg" role="button">Logout</a>
+    </div>
+
+<%- include('partials/footer') %>
