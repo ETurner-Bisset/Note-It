@@ -51,7 +51,7 @@ app.get("/main", ensureAuthenticated, async (req, res) => {
     const noteTitles = await pool.query("SELECT * FROM notes WHERE user_id = $1", [id])
     const listItems = await pool.query("SELECT list_item, note_id FROM items JOIN notes ON notes.id = $1", [id]);
     
-    // console.log(noteTitles.rows);
+    console.log(noteTitles.rows);
     res.render("main-v2.ejs", {date: date, noteTitles: noteTitles.rows, listItems: listItems.rows});
 });
 
