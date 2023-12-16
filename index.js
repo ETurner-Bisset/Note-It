@@ -158,9 +158,7 @@ app.post("/showNote", async (req, res) => {
     const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1", [noteId])
     const listItems = await pool.query("SELECT list_item, id, done, note_id FROM items WHERE note_id = $1 ORDER BY id ASC", [noteId]);
     // console.log(listItems.rows);
-    const noteBody = await pool.query("SELECT * FROM voicenotes WHERE note_id = $1", [noteId]);
-    // console.log(noteBody.rows[0]);
-    res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: noteId, noteBody: noteBody.rows[0]});
+    res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: noteId});
 });
     
 app.post("/note", async (req, res) => {
