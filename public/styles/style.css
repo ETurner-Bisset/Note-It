@@ -446,6 +446,10 @@ input[type=checkbox]:checked + p {
 }
 
 /* search note titles  */
+.search-constainer {
+    display: flex;
+}
+
 .search-form {
     background-color: transparent;
     box-shadow: none;

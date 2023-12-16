@@ -15,7 +15,7 @@ ejsLint("ejs", {async: true});
 intializePassport(passport);
 
 const app = express();
-const port =  8080;
+const port =  3000;
 
 const date = new Date().getFullYear();
 
@@ -48,11 +48,9 @@ app.get("/login", checkAuthenticated, (req, res) => {
 
 app.get("/main", ensureAuthenticated, async (req, res) => {
     const id = req.user.id;
-    const noteTitles = await pool.query("SELECT * FROM notes WHERE user_id = $1", [id])
-    const listItems = await pool.query("SELECT list_item, note_id FROM items JOIN notes ON notes.id = $1", [id]);
-    
+    const noteTitles = await pool.query("SELECT * FROM notes WHERE user_id = $1", [id]);
     console.log(noteTitles.rows);
-    res.render("main-v2.ejs", {date: date, noteTitles: noteTitles.rows, listItems: listItems.rows});
+    res.render("main-v2.ejs", {date: date, noteTitles: noteTitles.rows});
 });
 
 // Example note
@@ -95,11 +93,8 @@ app.post("/register", async (req, res) => {
     const email = req.body.username;
     const password = req.body.password;
     const password2 = req.body.password2;
-
-    console.log(email, password);
-
+    // console.log(email, password);
     let errors = [];
-
     if ( !email || !password || !password2) {
         errors.push({message: "Please enter all fields"});
     }
@@ -156,6 +151,7 @@ app.post("/login", passport.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true
 }));
+
 // show single note
 app.post("/showNote", async (req, res) => {
     const noteId = req.body.noteId;
