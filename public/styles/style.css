@@ -452,6 +452,7 @@ input[type=checkbox]:checked + p {
     background-color: transparent;
     box-shadow: none;
     display: flex;
+    width: 50%;
 }
 
 .search {
