@@ -23,6 +23,7 @@ let done = false;
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
+app.use(express.json());
 
 app.use(session({
     secret: process.env.SECRET ,
@@ -49,7 +50,7 @@ app.get("/login", checkAuthenticated, (req, res) => {
 app.get("/main", ensureAuthenticated, async (req, res) => {
     const id = req.user.id;
     const noteTitles = await pool.query("SELECT * FROM notes WHERE user_id = $1", [id]);
-    console.log(noteTitles.rows);
+    // console.log(noteTitles.rows);
     res.render("main-v2.ejs", {date: date, noteTitles: noteTitles.rows});
 });
 
@@ -155,6 +156,7 @@ app.post("/login", passport.authenticate("local", {
 // show single note
 app.post("/showNote", async (req, res) => {
     const noteId = req.body.noteId;
+    console.log(typeof noteId);
     const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1", [noteId])
     const listItems = await pool.query("SELECT list_item, id, done, note_id FROM items WHERE note_id = $1 ORDER BY id ASC", [noteId]);
     // console.log(listItems.rows);
@@ -185,14 +187,22 @@ app.post("/voiceNote", async (req, res) => {
     const id = req.user.id;
     const noteTitle = req.body.noteTitle;
     const noteBody = req.body.noteBody;
-    try {
-        const noteId = await pool.query("INSERT INTO notes (note_title, user_id) VALUES ($1, $2) RETURNING id", [noteTitle, id]);
-        console.log(noteId);
-        await pool.query("INSERT INTO items ( list_item, note_id, user_id, done) VALUES ($1, $2, $3, $4)", [noteBody, noteId.rows[0].id, id, done]);
-        res.redirect("/main");
-    } catch (error) {
-        console.log(error);
+    const message = {
+        message: "You must enter a note"
     }
+    if (noteBody !== "") {
+        try {
+            const noteId = await pool.query("INSERT INTO notes (note_title, user_id) VALUES ($1, $2) RETURNING id", [noteTitle, id]);
+            // console.log(noteId);
+            await pool.query("INSERT INTO items ( list_item, note_id, user_id, done) VALUES ($1, $2, $3, $4)", [noteBody, noteId.rows[0].id, id, done]);
+            res.redirect("/main");
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        res.render("voiceNote.ejs", {date: date, message: message, id: id})
+    }
+    
 });
 
 // Add single item
@@ -200,12 +210,12 @@ app.post("/add", ensureAuthenticated, async (req, res) => {
     const noteId = req.body.noteId;
     const id = req.user.id;
     const item = req.body.item;
-    console.log(noteId);
+    // console.log(parseInt(noteId));
     try {
-        pool.query("INSERT INTO items (list_item, note_id, user_id, done) VALUES ($1, $2, $3, $4)", [item, noteId, id, done]);
-        const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1 ORDER BY id ASC", [noteId]);
-        const listItems = await pool.query("SELECT list_item, id FROM items WHERE note_id = $1", [noteId]);   
-        res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: noteId});
+        pool.query("INSERT INTO items (list_item, note_id, user_id, done) VALUES ($1, $2, $3, $4)", [item, parseInt(noteId), id, done]);
+        const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1 ORDER BY id ASC", [parseInt(noteId)]);
+        const listItems = await pool.query("SELECT list_item, id FROM items WHERE note_id = $1", [parseInt(noteId)]);   
+        res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId)});
     } catch (error) {
         console.log(error);
     }
@@ -216,12 +226,11 @@ app.post("/edit", async (req, res) => {
    const itemId = req.body.updatedItemId;
    const updatedItem = req.body.updatedItem;
    const noteId = req.body.noteId;
-   console.log(noteId);
    try {
     await pool.query("UPDATE items SET list_item = $1 WHERE id = $2", [updatedItem, itemId]);
-    const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1 ORDER BY id ASC", [noteId]);
-    const listItems = await pool.query("SELECT list_item, id FROM items WHERE note_id = $1 ORDER BY id ASC", [noteId]);   
-    res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: noteId});
+    const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1 ORDER BY id ASC", [parseInt(noteId)]);
+    const listItems = await pool.query("SELECT list_item, id FROM items WHERE note_id = $1 ORDER BY id ASC", [parseInt(noteId)]);   
+    res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId)});
    } catch (error) {
     console.log(error);
    }
@@ -234,12 +243,11 @@ app.post("/checkOff", async (req, res) => {
         const doneStatus = await pool.query("UPDATE items SET done = NOT done WHERE list_item = $1 RETURNING done", [item]);
         // console.log(doneStatus.rows[0]);
         const noteId = req.body.noteId;
-        const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1", [noteId])
-        const listItems = await pool.query("SELECT list_item, id, done, note_id FROM items WHERE note_id = $1 ORDER BY id ASC", [noteId]);
+        // console.log(typeof parseInt(noteId));
+        const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1", [parseInt(noteId)])
+        const listItems = await pool.query("SELECT list_item, id, done, note_id FROM items WHERE note_id = $1 ORDER BY id ASC", [parseInt(noteId)]);
         // console.log(listItems.rows);
-        const noteBody = await pool.query("SELECT * FROM voicenotes WHERE note_id = $1", [noteId]);
-        // console.log(noteBody.rows[0]);
-        res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: noteId, noteBody: noteBody.rows[0], doneStatus: doneStatus.rows[0].done});
+        res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId), doneStatus: doneStatus.rows[0].done});
         } catch (error) {
             console.log(error);
         }
@@ -248,13 +256,13 @@ app.post("/checkOff", async (req, res) => {
 // Delete single item
 app.post("/delete", async (req, res) => {
     const itemId = req.body.itemId;
-    const noteId = await pool.query("SELECT note_id FROM items WHERE ID = $1", [itemId]);
-    
     try {
-        await pool.query("DELETE FROM items WHERE id = $1", [itemId]);
-        const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1 ", [noteId.rows[0].note_id]);
-        const listItems = await pool.query("SELECT list_item, id, done FROM items WHERE note_id = $1 ORDER BY id ASC", [noteId.rows[0].note_id]);
-        res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: noteId});
+        const noteId = await pool.query("DELETE FROM items WHERE id = $1 RETURNING note_id", [itemId]);
+        console.log(parseInt(noteId.rows[0].note_id));
+        const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1 ", [parseInt(noteId.rows[0].note_id)]);
+        const listItems = await pool.query("SELECT list_item, id, done, note_id FROM items WHERE note_id = $1 ORDER BY id ASC", [parseInt(noteId.rows[0].note_id)]);
+        // console.log(listItems);
+        res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId.rows[0].note_id)});
     } catch (error) {
         console.log(error);
     }
@@ -262,6 +270,7 @@ app.post("/delete", async (req, res) => {
 //  Delete whole note
 app.post("/delete-note", async (req, res) => {
     const noteId = req.body.noteId;
+    console.log(noteId);
     try {
         await pool.query("DELETE FROM items WHERE note_id = $1", [noteId]);
         await pool.query("DELETE FROM notes WHERE id = $1", [noteId]);
@@ -283,11 +292,10 @@ app.post("/search", async (req, res) => {
     } else {
         try {
             const noteId = await pool.query("SELECT id FROM notes WHERE note_title = $1", [searchtitle])
-            console.log(noteId.rows[0].id);
+            // console.log(noteId.rows[0].id);
             const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1", [noteId.rows[0].id])
-            const listItems = await pool.query("SELECT list_item, id, done, note_id FROM items WHERE note_id = $1", [noteId.rows[0].id]);
-            const noteBody = await pool.query("SELECT * FROM voicenotes WHERE note_id = $1", [noteId.rows[0].id])
-            res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: noteId, noteBody: noteBody.rows[0]}); 
+            const listItems = await pool.query("SELECT list_item, id, done, note_id FROM items WHERE note_id = $1 ORDER BY id ASC", [noteId.rows[0].id]);
+            res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: noteId.rows[0].id}); 
         
     } catch (error) {
         console.log(error);
