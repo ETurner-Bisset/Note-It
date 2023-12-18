@@ -15,7 +15,7 @@ ejsLint("ejs", {async: true});
 intializePassport(passport);
 
 const app = express();
-const port =  8080;
+const port =  3000;
 
 const date = new Date().getFullYear();
 
@@ -94,10 +94,18 @@ app.post("/register", async (req, res) => {
     const email = req.body.username;
     const password = req.body.password;
     const password2 = req.body.password2;
+    const storedEmails = await pool.query("SELECT email FROM users");
+    let emails = [];
     // console.log(email, password);
     let errors = [];
     if ( !email || !password || !password2) {
         errors.push({message: "Please enter all fields"});
+    }
+    storedEmails.rows.forEach((item) => {
+        emails.push(item.email)
+    })
+    if (emails.includes(email)) {
+        errors.push({message: "That email is already registered"})
     }
 
     if (password.length < 6) {
@@ -167,19 +175,27 @@ app.post("/note", async (req, res) => {
     const id = req.user.id;
     const noteTitle = req.body.listTitle;
     const items = [...req.body.item];
-    // console.log(items);
-    try {
-        const noteId = await pool.query("INSERT INTO notes (note_title, user_id) VALUES ($1, $2) RETURNING id", [noteTitle, id]);
-        items.forEach(async (item) => {
-            if (item !== "") {
-                const listItems = await pool.query("INSERT INTO items (list_item, note_id, user_id, done) VALUES ($1, $2, $3, $4) RETURNING list_item", [item, noteId.rows[0].id, id, done]);
-            // console.log(listItems.rows);
-            }
-        })
-        res.redirect("/main");
-    } catch (error) {
-        console.log(error);
+    const message = {
+        message: "You must enter a note"
     }
+    // console.log(items);
+    if (items !== "") {
+        try {
+            const noteId = await pool.query("INSERT INTO notes (note_title, user_id) VALUES ($1, $2) RETURNING id", [noteTitle, id]);
+            items.forEach(async (item) => {
+                if (item !== "") {
+                    const listItems = await pool.query("INSERT INTO items (list_item, note_id, user_id, done) VALUES ($1, $2, $3, $4) RETURNING list_item", [item, noteId.rows[0].id, id, done]);
+                // console.log(listItems.rows);
+                }
+            })
+            res.redirect("/main");
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
+        res.render("note.ejs", {date: date, message: message, id: id})
+    }
+    
 });
 
 // Add voice note

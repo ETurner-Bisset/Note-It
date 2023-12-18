@@ -3,6 +3,12 @@
 <main>
     <h1 class="main-title">Note It <i class="fa-solid fa-pen-nib"></i></h1>
 
+    <% if (locals.message) { %>
+        <ul>
+            <li><%= message.message %></li>
+        </ul>
+    <% } %>
+
     <form action="/note" method="post" class="new-note">
         <h2>Add New Note</h2>
         <hr class="underline">
