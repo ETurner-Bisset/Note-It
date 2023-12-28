@@ -9,13 +9,22 @@ import session from "express-session";
 import bcrypt from "bcrypt";
 import intializePassport from "./passportConfig.js";
 import ejsLint from "ejs-lint";
+import favicon from "serve-favicon";
+import path from "path";
+import { fileURLToPath } from "url";
 
 ejsLint("ejs", {async: true});
 
 intializePassport(passport);
 
 const app = express();
-const port =  8080;
+const port =  3000;
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
+
+app.use(favicon(path.join(__dirname, "public", "favicon.ico")))
 
 const date = new Date().getFullYear();
 
