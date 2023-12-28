@@ -12,6 +12,7 @@ import ejsLint from "ejs-lint";
 import favicon from "serve-favicon";
 import path from "path";
 import { fileURLToPath } from "url";
+import _ from "lodash";
 
 ejsLint("ejs", {async: true});
 
@@ -307,9 +308,9 @@ app.post("/delete-note", async (req, res) => {
 
 // search note title 
 app.post("/search", async (req, res) => {
-    const searchtitle = req.body.searchTitle;
+    const searchtitle = _.capitalize(req.body.searchTitle);
     const searchedTitle = await pool.query("SELECT note_title FROM notes WHERE note_title = $1", [searchtitle]);
-    // console.log(searchedTitle.rows.length);
+    // console.log(searchedTitle.rows[0].note_title);
     if (searchedTitle.rows.length < 1) {
         const noteId = await pool.query("SELECT id FROM notes WHERE note_title = $1", [searchtitle])
         // console.log(noteId.rows);
