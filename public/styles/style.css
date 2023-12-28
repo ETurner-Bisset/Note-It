@@ -178,6 +178,7 @@ main {
 
 footer {
     position: sticky;
+    margin-top: 20px;
 }
 
 .underline {
