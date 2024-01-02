@@ -453,7 +453,8 @@ input[type=checkbox]:checked + p {
 /* search note titles  */
 
 .search-container {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     width: 100%;
 }
 
@@ -477,6 +478,7 @@ input[type=checkbox]:checked + p {
 
 .search {
     box-shadow: 8px;
+    margin: 8px;
 }
 
 .search-btn {
