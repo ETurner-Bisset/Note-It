@@ -452,6 +452,20 @@ input[type=checkbox]:checked + p {
 
 /* search note titles  */
 
+.search-container {
+    display: inline-block;
+}
+
+@media (max-width: 750px) {
+    .search-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .search-btn {
+        margin-top: 8px;
+    }
+}
 
 .search-form {
     background-color: transparent;
