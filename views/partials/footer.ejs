@@ -37,28 +37,51 @@ recognition.addEventListener("result", (e) => {
     }
 });
 </script>
+<!-- add 1 additional item -->
+<script>
+    function addOneItem() {
+        const items = document.getElementsByClassName("mb-3")
+        const newNote = document.querySelector(".items");
+        const newItem = document.createElement("div");
+        for (let i = 5; i < items.length ; i++) {
+            newItem.classList.add("mb-3");
+            newItem.classList.add("list-item");
+            newItem.innerHTML = `
+            <label for="item${i}">${i}.</label>
+            <input type="text" name="item" id="item${i}" class="item" >
+            <p class="hidden"></p>
+        `;
+        };
+        newNote.appendChild(newItem);
+    };
+</script>
 <!-- add new note -->
 <script>
-    const addBtnTitle = document.querySelector(".add-btn-title");
-    const listTitle = document.querySelector(".list-title");
-    const textTitle = document.querySelector(".hidden-title");
-    addBtnTitle.addEventListener("click", (e) => {
-        e.preventDefault();
-        listTitle.classList.toggle("hidden-title");
-        textTitle.classList.toggle("show");
-        textTitle.innerHTML = listTitle.value;
-    });
-    const addBtns = document.querySelectorAll(".add-btn");
-    const items = document.querySelectorAll(".item");
-    const texts = document.querySelectorAll(".hidden");
-    for (let i = 0; i < items.length; i++) {
-        addBtns[i].addEventListener("click", (e) => {
-            e.preventDefault();
-            items[i].classList.toggle("hidden");
-            texts[i].classList.toggle("show")
-            texts[i].innerHTML = items[i].value;
-        });
-    };
+    // const addBtnTitle = document.querySelector(".add-btn-title");
+    // const listTitle = document.querySelector(".list-title");
+    // const textTitle = document.querySelector(".hidden-title");
+    // addBtnTitle.addEventListener("click", (e) => {
+    //     e.preventDefault();
+    //     listTitle.classList.toggle("hidden-title");
+    //     textTitle.classList.toggle("show");
+    //     textTitle.innerHTML = listTitle.value;
+    // });
+    
+    //     const addBtns = document.querySelectorAll(".add-btn");
+    //     const items = document.querySelectorAll(".item");
+    //     const texts = document.querySelectorAll(".hidden");
+    //     for (let i = 0; i < items.length; i++) {
+    //         addBtns[i].addEventListener("click", (e) => {
+    //             e.preventDefault();
+    //             items[i].classList.toggle("hidden");
+    //             texts[i].classList.toggle("show");
+    //             // console.log(items[i].value);
+    //             texts[i].innerHTML = items[i].value
+            
+    //        ;
+    //     });
+    // };
+    
 </script>
 <!-- edit item function -->
 <script>
@@ -69,23 +92,18 @@ recognition.addEventListener("result", (e) => {
         document.getElementById("input" + id).removeAttribute("hidden")
     }
 </script>
-<!-- add 1 additional item -->
+
+<!-- add btn event listener -->
 <script>
-    function addFiveItems() {
-        const items = document.getElementsByClassName("mb-3")
-        const newNote = document.querySelector(".additional-items");
-        const newItem = document.createElement("div");
-        for (let i = 5; i < items.length ; i++) {
-            newItem.classList.add("mb-3");
-            newItem.innerHTML = `
-            <label for="item${i}">${i}.</label>
-            <input type="text" name="item" id="item${i}" class="item" >
-            <p class="hidden"></p>
-            <button class="btn btn-dark add-btn">+</button>
-        `;
-        };
-        newNote.appendChild(newItem);
-    };
+    // document.addEventListener("click", function(e) {
+    //     const target = e.target.closest(".add-btn");
+    //     e.preventDefault();
+    //     if (target) {
+    //         console.log("clicked");
+    //     }
+    // })
+    
+    
 </script>
 <!-- done status of single items -->
 <script>

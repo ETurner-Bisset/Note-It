@@ -169,6 +169,30 @@ main {
 
 .new-note {
     min-width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mb-3 {
+    text-align: left;
+}
+
+.list-item {
+    margin-left: -13px;
+}
+
+.note-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.small-underline {
+    border-top: 5px dashed #000;
+    width: 50%;
+    margin: 10px auto;
 }
 
 .showTitle {
@@ -397,6 +421,7 @@ input[type=checkbox]:checked + p {
 
 .item {
     margin: 0;
+
 }
 
 .item label {

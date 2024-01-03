@@ -12,49 +12,52 @@
     <form action="/note" method="post" class="new-note">
         <h2>Add New Note</h2>
         <hr class="underline">
-        <div class="mb-3">
+        <div class="items">
+        <div class="mb-3 note-title">
             <label for="listTitle">Title: </label>
             <input type="text" name="listTitle" id="listTitle" class="list-title" >
             <p class="hidden-title"></p>
-            <button class="btn btn-dark add-btn-title">+</button>
+            <!-- <button class="btn btn-dark add-btn-title">+</button> -->
             
         </div>
-        <div class="mb-3">
+        <hr class="small-underline">
+        <label>List Items:</label>
+        <div class="mb-3 list-item">
             <label for="item1">1.</label>
             <input type="text" name="item" id="item1" class="item" >
             <p class="hidden"></p>
-            <button class="btn btn-dark add-btn">+</button>
+            <!-- <button class="btn btn-dark add-btn">+</button> -->
             
         </div>
-        <div class="mb-3">
+        <div class="mb-3 list-item">
             <label for="item2">2.</label>
             <input type="text" name="item" id="item2" class="item" >
             <p class="hidden"></p>
-            <button  class="btn btn-dark add-btn">+</button>
+            <!-- <button  class="btn btn-dark add-btn">+</button> -->
         </div>
-        <div class="mb-3">
+        <div class="mb-3 list-item">
             <label for="item3">3.</label>
             <input type="text" name="item" id="item3" class="item">
             <p class="hidden"></p>
-            <button  class="btn btn-dark add-btn ">+</button>
+            <!-- <button  class="btn btn-dark add-btn ">+</button> -->
         </div>
-        <div class="mb-3">
+        <div class="mb-3 list-item">
             <label for="item4">4.</label>
             <input type="text" name="item" id="item4" class="item">
             <p class="hidden"></p>
-            <button  class="btn btn-dark add-btn">+</button>
+            <!-- <button  class="btn btn-dark add-btn">+</button> -->
         </div>
-        <div class="mb-3">
+        <div class="mb-3 list-item">
             <label for="item5">5.</label>
             <input type="text" name="item" id="item5" class="item" >
             <p class="hidden"></p>
-            <button  class="btn btn-dark add-btn">+</button>
+            <!-- <button  class="btn btn-dark add-btn" >+</button> -->
         </div>
-        <div class="additional-items">
+        
 
         </div>
         <div class="mb-3">
-            <button class="btn btn-dark" type="button" onclick="addFiveItems()">More Items +</button>
+            <button class="btn btn-dark" type="button" onclick="addOneItem()">More Items +</button>
         </div>
             <button type="submit" class="btn btn-dark" value="<%= id %>">Save Note</button>
         
