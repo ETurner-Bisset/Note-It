@@ -184,6 +184,7 @@ app.post("/showNote", async (req, res) => {
 app.post("/note", async (req, res) => {
     const id = req.user.id;
     const noteTitle = req.body.listTitle;
+    const searchedTitle = await pool.query("SELECT note_title FROM notes WHERE note_title = $1", [noteTitle]);
     const items = [...req.body.item];
     // console.log(items);
     const message = {
@@ -191,25 +192,33 @@ app.post("/note", async (req, res) => {
     };
     const savedMessage = {
         message: "Your note was created"
+    } 
+    const duplicateMessage = {
+        message: "Please enter an unique title"
     }
-    if (items !== "") {
-        try {
-            const noteId = await pool.query("INSERT INTO notes (note_title, user_id) VALUES ($1, $2) RETURNING id", [noteTitle, id]);
-            items.forEach(async (item) => {
-                if (item !== "") {
-                    // console.log(item);
-                    await pool.query("INSERT INTO items (list_item, note_id, user_id, done) VALUES ($1, $2, $3, $4)", [item, noteId.rows[0].id, id, done]);
-                }
-            })
-            const noteTitles = await pool.query("SELECT * FROM notes WHERE user_id = $1 ORDER BY id ASC", [id]);
-            // console.log(noteTitles.rows);
-            res.render("main-v2.ejs", {date: date, noteTitles: noteTitles.rows, message: savedMessage});
-        } catch (error) {
-            console.log(error);
-        }
+    if (searchedTitle.rows) {
+        res.render("note.ejs", {date: date, message: duplicateMessage, id: id})
     } else {
-        res.render("note.ejs", {date: date, message: message, id: id})
+        if (items !== "") {
+            try {
+                const noteId = await pool.query("INSERT INTO notes (note_title, user_id) VALUES ($1, $2) RETURNING id", [noteTitle, id]);
+                items.forEach(async (item) => {
+                    if (item !== "") {
+                        // console.log(item);
+                        await pool.query("INSERT INTO items (list_item, note_id, user_id, done) VALUES ($1, $2, $3, $4)", [item, noteId.rows[0].id, id, done]);
+                    }
+                })
+                const noteTitles = await pool.query("SELECT * FROM notes WHERE user_id = $1 ORDER BY id ASC", [id]);
+                // console.log(noteTitles.rows);
+                res.render("main-v2.ejs", {date: date, noteTitles: noteTitles.rows, message: savedMessage});
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            res.render("note.ejs", {date: date, message: message, id: id})
+        }
     }
+    
     
 });
 
