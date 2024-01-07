@@ -186,7 +186,6 @@ app.post("/note", async (req, res) => {
     const noteTitle = req.body.listTitle;
     const searchedTitle = await pool.query("SELECT note_title FROM notes WHERE note_title = $1", [noteTitle]);
     const items = [...req.body.item];
-    // console.log(items);
     const message = {
         message: "You must enter a note"
     };
@@ -196,9 +195,7 @@ app.post("/note", async (req, res) => {
     const duplicateMessage = {
         message: "Please enter an unique title"
     }
-    if (searchedTitle.rows) {
-        res.render("note.ejs", {date: date, message: duplicateMessage, id: id})
-    } else {
+    if (searchedTitle.rows.length === 0) {
         if (items !== "") {
             try {
                 const noteId = await pool.query("INSERT INTO notes (note_title, user_id) VALUES ($1, $2) RETURNING id", [noteTitle, id]);
@@ -217,6 +214,9 @@ app.post("/note", async (req, res) => {
         } else {
             res.render("note.ejs", {date: date, message: message, id: id})
         }
+        
+    } else {
+        res.render("note.ejs", {date: date, message: duplicateMessage, id: id});
     }
     
     
