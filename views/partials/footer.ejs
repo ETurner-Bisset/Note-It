@@ -86,6 +86,10 @@ recognition.addEventListener("result", (e) => {
 <!-- edit item function -->
 <script>
     function handler(id) {
+        document.getElementById("title" + id).setAttribute("hidden", true)
+        document.getElementById("editTitle" + id).setAttribute("hidden", true)
+        document.getElementById("inputTitle" + id).removeAttribute("hidden")
+        document.getElementById("doneTitle" + id).removeAttribute("hidden")
         document.getElementById("item" + id).setAttribute("hidden", true)
         document.getElementById("edit" + id).setAttribute("hidden", true)
         document.getElementById("done" + id).removeAttribute("hidden")

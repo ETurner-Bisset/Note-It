@@ -7,7 +7,24 @@
         
             <% if (locals.listItems)  { %>
                 <div class="note-container">
-                <h3><%= noteTitle %></h3>
+                    <div class="title">
+                
+                <form class="edit" action="/editTitle" method="post">
+                    <div class="tick">
+                    <input type="hidden" name="updatedTitleId" value="<%= noteId %>">
+                    <h3 class="title" name="title" id="title<%= noteId %>"><%= noteTitle %></h3>
+                    <input id="inputTitle<%=noteId%>" type="text" name="updatedTitle" value="<%= noteTitle %>" autocomplete="off"
+                    autofocus="true" hidden="true" />
+                    <button id="doneTitle<%=noteId%>" class="edit" type="submit" name="noteId" value="<%= noteId %>" hidden>
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+                
+                </form>
+                <button id="editTitle<%=noteId%>" class="edit" onclick="handler('<%=noteId%>')">
+                    <i class="fa-solid fa-pencil"></i>
+                </button>
+            </div>
                 <hr class="underline">
                 <ul>
                 <% listItems.forEach((item) => { %>

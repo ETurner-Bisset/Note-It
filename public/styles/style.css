@@ -174,12 +174,24 @@ main {
     align-items: center;
 }
 
+.title {
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .mb-3 {
     text-align: left;
 }
 
+.items {
+    display: flex;
+    flex-direction: column;
+    
+}
+
 .list-item {
     margin-left: -13px;
+    
 }
 
 .note-title {
@@ -421,8 +433,9 @@ input[type=checkbox]:checked + p {
 
 .item {
     margin: 0;
-
+    
 }
+
 
 .item label {
     display: flex;
