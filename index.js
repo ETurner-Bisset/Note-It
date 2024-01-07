@@ -188,6 +188,9 @@ app.post("/note", async (req, res) => {
     // console.log(items);
     const message = {
         message: "You must enter a note"
+    };
+    const savedMessage = {
+        message: "Your note was created"
     }
     if (items !== "") {
         try {
@@ -198,7 +201,9 @@ app.post("/note", async (req, res) => {
                     await pool.query("INSERT INTO items (list_item, note_id, user_id, done) VALUES ($1, $2, $3, $4)", [item, noteId.rows[0].id, id, done]);
                 }
             })
-            res.redirect("/main");
+            const noteTitles = await pool.query("SELECT * FROM notes WHERE user_id = $1 ORDER BY id ASC", [id]);
+            // console.log(noteTitles.rows);
+            res.render("main-v2.ejs", {date: date, noteTitles: noteTitles.rows, message: savedMessage});
         } catch (error) {
             console.log(error);
         }
@@ -215,13 +220,18 @@ app.post("/voiceNote", async (req, res) => {
     const noteBody = req.body.noteBody;
     const message = {
         message: "You must enter a note"
-    }
+    };
+    const savedMessage = {
+        message: "Your voice note was created"
+    };
     if (noteBody !== "") {
         try {
             const noteId = await pool.query("INSERT INTO notes (note_title, user_id) VALUES ($1, $2) RETURNING id", [noteTitle, id]);
             // console.log(noteId);
             await pool.query("INSERT INTO items ( list_item, note_id, user_id, done) VALUES ($1, $2, $3, $4)", [noteBody, noteId.rows[0].id, id, done]);
-            res.redirect("/main");
+            const noteTitles = await pool.query("SELECT * FROM notes WHERE user_id = $1 ORDER BY id ASC", [id]);
+            // console.log(noteTitles.rows);
+            res.render("main-v2.ejs", {date: date, noteTitles: noteTitles.rows, message: savedMessage});
         } catch (error) {
             console.log(error);
         }
@@ -236,12 +246,15 @@ app.post("/add", ensureAuthenticated, async (req, res) => {
     const noteId = req.body.noteId;
     const id = req.user.id;
     const item = req.body.item;
+    const addItemMessage = {
+        message: "An item was added"
+    };
     // console.log(parseInt(noteId));
     try {
         pool.query("INSERT INTO items (list_item, note_id, user_id, done) VALUES ($1, $2, $3, $4)", [item, parseInt(noteId), id, done]);
         const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1 ORDER BY id ASC", [parseInt(noteId)]);
         const listItems = await pool.query("SELECT list_item, id, done FROM items WHERE note_id = $1 ORDER BY id ASC", [parseInt(noteId)]);   
-        res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId)});
+        res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId), message: addItemMessage});
     } catch (error) {
         console.log(error);
     }
@@ -252,11 +265,14 @@ app.post("/edit", async (req, res) => {
    const itemId = req.body.updatedItemId;
    const updatedItem = req.body.updatedItem;
    const noteId = req.body.noteId;
+   const editItemMessage = {
+    message: "An item was edited"
+   }
    try {
     await pool.query("UPDATE items SET list_item = $1 WHERE id = $2", [updatedItem, itemId]);
     const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1 ORDER BY id ASC", [parseInt(noteId)]);
     const listItems = await pool.query("SELECT list_item, id FROM items WHERE note_id = $1 ORDER BY id ASC", [parseInt(noteId)]);   
-    res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId)});
+    res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId), message: editItemMessage});
    } catch (error) {
     console.log(error);
    }
@@ -266,11 +282,14 @@ app.post("/edit", async (req, res) => {
 app.post("/editTitle", async (req, res) => {
     const updatedTitle = req.body.updatedTitle;
     const noteId = req.body.noteId;
+    const editTitleMessage = {
+        message: "Your title was edited"
+    }
     try {
         await pool.query("UPDATE notes SET note_title = $1 WHERE id = $2", [updatedTitle, noteId]);
         const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1 ORDER BY id ASC", [parseInt(noteId)]);
         const listItems = await pool.query("SELECT list_item, id FROM items WHERE note_id = $1 ORDER BY id ASC", [parseInt(noteId)]);   
-        res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId)});
+        res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId), message: editTitleMessage});
     } catch (error) {
         console.log(error);
     }
@@ -296,25 +315,34 @@ app.post("/checkOff", async (req, res) => {
 // Delete single item
 app.post("/delete", async (req, res) => {
     const itemId = req.body.itemId;
+    const deleteItemMessage = {
+        message: "An Item was deleted"
+    }
     try {
         const noteId = await pool.query("DELETE FROM items WHERE id = $1 RETURNING note_id", [itemId]);
         // console.log(parseInt(noteId.rows[0].note_id));
         const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1 ", [parseInt(noteId.rows[0].note_id)]);
         const listItems = await pool.query("SELECT list_item, id, done, note_id FROM items WHERE note_id = $1 ORDER BY id ASC", [parseInt(noteId.rows[0].note_id)]);
         // console.log(listItems);
-        res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId.rows[0].note_id)});
+        res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId.rows[0].note_id), message: deleteItemMessage});
     } catch (error) {
         console.log(error);
     }
 })
 //  Delete whole note
 app.post("/delete-note", async (req, res) => {
+    const id = req.user.id;
     const noteId = req.body.noteId;
     // console.log(noteId);
+    const deleteMessage = {
+        message: "Your note was deleted"
+    };
     try {
         await pool.query("DELETE FROM items WHERE note_id = $1", [noteId]);
         await pool.query("DELETE FROM notes WHERE id = $1", [noteId]);
-        res.redirect("/main");
+        const noteTitles = await pool.query("SELECT * FROM notes WHERE user_id = $1 ORDER BY id ASC", [id]);
+        // console.log(noteTitles.rows);
+        res.render("main-v2.ejs", {date: date, noteTitles: noteTitles.rows, message: deleteMessage});
     } catch (error) {
         console.log(error); 
     }

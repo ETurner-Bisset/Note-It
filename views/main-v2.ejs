@@ -15,6 +15,11 @@
         
         </form>
     </div>
+    <% if (locals.message) {%>
+        <div class="message-container">
+            <p><%= message.message %></p>
+        </div>
+    <%} %>
     <div class="new-notes">
         <% if (locals.noteTitles.length > 0) { %>
             <% noteTitles.forEach((title) => { %>

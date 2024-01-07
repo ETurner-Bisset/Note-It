@@ -3,7 +3,11 @@
 <main>
     <h1 class="main-title">Note It <i class="fa-solid fa-pen-nib"></i></h1>
 
-    
+        <% if (locals.message) {%>
+            <div class="message-container">
+                <p><%= message.message %></p>
+            </div>
+        <%} %>
         
             <% if (locals.listItems)  { %>
                 <div class="note-container">
@@ -21,7 +25,7 @@
                 </div>
                 
                 </form>
-                <button id="editTitle<%=noteId%>" class="edit" onclick="handler('<%=noteId%>')">
+                <button id="editTitle<%=noteId%>" class="edit" onclick="handlerTitle('<%=noteId%>')">
                     <i class="fa-solid fa-pencil"></i>
                 </button>
             </div>
