@@ -10,6 +10,10 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    /* overflow-anchor: none !important; */
+    /* scroll-snap-stop: normal !important; */
+    /* overscroll-behavior: unset !important; */
+    scroll-behavior: unset !important;
 }
 
 body {
@@ -22,7 +26,8 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
+    
 }
 
 .container {
