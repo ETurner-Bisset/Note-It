@@ -1,6 +1,7 @@
 <%- include('partials/header') %>
 <main>
     <h1 class="main-title">Note It <i class="fa-solid fa-pen-nib"></i></h1>
+    
 <h1>Register</h1>
 <ul>
     <% if (typeof errors != 'undefined') { %>
@@ -11,6 +12,7 @@
     <% } %>
     
 </ul>
+
 <form action="/register" method="post">
     <div class="mb-3">
         <label for="exampleInputEmail" class="form-label">Email:</label>
@@ -29,6 +31,7 @@
     </div>
     <button type="submit" class="btn btn-dark">Submit</button>
 </form>
+
 <a href="/" class="btn btn-dark btn-lg" role="button" class="home-btn">Home</a>
 
 <%- include('partials/footer') %>

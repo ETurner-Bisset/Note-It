@@ -1,0 +1,9 @@
+.home {
+    margin-top: 150px;
+    height: 100%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
