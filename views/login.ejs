@@ -1,12 +1,14 @@
 <%- include('partials/header') %>
-<main>
+<main class="login-main">
     <h1 class="main-title">Note It <i class="fa-solid fa-pen-nib"></i></h1>
     
-<h1>Login</h1>
+
 <ul>
     <% if (messages.success_msg) { %>
         <li><%= messages.success_msg %></li>
     <% } %>
+        
+    
 </ul>
 
 <ul>
@@ -15,17 +17,25 @@
   <%  } %>
 </ul>
 
-<form action="/login" method="post">
+<ul>
+    <% if(messages.failureMessage) { %>
+        <li><%= messages.failureMessage %></li>
+  <%  } %>
+</ul>
+
+<form action="/login" method="post" class="login-form">
+    <h1 class="login-title">Login</h1>
+    <hr class="underline">
     <div class="mb-3">
         <label for="exampleInputEmail" class="form-label">Email:</label>
-        <input type="email" name="username" id="exampleInputEmail" class="form-control" aria-describedby="emailHelp" autofocus>
+        <input type="email" name="username" id="exampleInputEmail" class="form-control" aria-describedby="emailHelp">
     </div>
     <div class="mb-3">
         <label for="exampleInputPassword" class="form-label">Password:</label>
-        <input type="password" name="password" id="exampleInputPassword" class="form-control" autofocus>
+        <input type="password" name="password" id="exampleInputPassword" class="form-control" >
     </div>
     
-    <button type="submit" class="btn btn-dark">Submit</button>
+    <button type="submit" class="btn btn-dark login-submit-btn">Login</button>
 </form>
 <a href="/" class="btn btn-dark btn-lg" role="button" class="home-btn">Home</a>
 

@@ -1,6 +1,6 @@
 <%- include('partials/header') %>
 
-<main>
+<main class="voice-container">
     <h1 class="main-title">Note It <i class="fa-solid fa-pen-nib"></i></h1>
     
     <% if (locals.message) { %>
@@ -18,7 +18,7 @@
         </div>
         <div class="mb-3 note-body">
             <label for="noteBody">Note:</label>
-            <textarea name="noteBody" class="words" id="noteBody" cols="30" rows="10"></textarea>
+            <textarea name="noteBody" class="words" id="noteBody" cols="24" rows="10"></textarea>
             <button class="mic-btn btn btn-dark" type="button"><i class="fa-solid fa-microphone"></i></button>
         </div>
         <button type="submit" class="btn btn-dark" value="<%= id %>">Save Note</button>

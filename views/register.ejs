@@ -1,8 +1,8 @@
 <%- include('partials/header') %>
-<main>
+<main class="reg-main">
     <h1 class="main-title">Note It <i class="fa-solid fa-pen-nib"></i></h1>
     
-<h1>Register</h1>
+
 <ul>
     <% if (typeof errors != 'undefined') { %>
         <% errors.forEach((error) => { %>
@@ -12,24 +12,31 @@
     <% } %>
     
 </ul>
+<ul>
+    <% if (messages.adviceMessage) { %>
+        <li><%= messages.adviceMessage %></li>
+    <%} %>
+</ul>
 
-<form action="/register" method="post">
+<form action="/register" method="post" class="register-form">
+    <h1 class="reg-title">Register</h1>
+    <hr class="underline">
     <div class="mb-3">
         <label for="exampleInputEmail" class="form-label">Email:</label>
-        <input type="email" name="username" id="exampleInputEmail" class="form-control " aria-describedby="emailHelp" autofocus>
+        <input type="email" name="username" id="exampleInputEmail" class="form-control " aria-describedby="emailHelp" >
         <div class="form-text" id="emailHelp">We'll never share your email with anyone else.</div>
     </div>
     <div class="mb-3">
         <label for="exampleInputPassword" class="form-label">Password:</label>
         <div class="password">
-        <input type="password" name="password" id="exampleInputPasswordRegister" class="form-control " autofocus><i id="togglePassword" class="fa-regular fa-eye-slash"></i>
+        <input type="password" name="password" id="exampleInputPasswordRegister" class="form-control " ><i id="togglePassword" class="fa-regular fa-eye-slash"></i>
     </div>
     </div>
     <div class="mb-3">
         <label for="exampleInputPasswords" class="form-label">Confirm Password:</label>
-        <input type="password" name="password2" id="exampleInputPassword2" class="form-control " autofocus>
+        <input type="password" name="password2" id="exampleInputPassword2" class="form-control " >
     </div>
-    <button type="submit" class="btn btn-dark">Submit</button>
+    <button type="submit" class="btn btn-dark reg-submit-btn">Submit</button>
 </form>
 
 <a href="/" class="btn btn-dark btn-lg" role="button" class="home-btn">Home</a>

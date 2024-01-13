@@ -1,0 +1,49 @@
+.voice-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* width: 1200px; */
+}
+
+.voice-note-form {
+    background-color: #fff;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    min-width: 250px;
+    width: 350px;
+    min-height: auto;
+    padding: 15px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.voice-note-form h2 {
+    text-align: center;
+} 
+
+.note-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+textarea {
+    cursor: text;
+    caret-color: black;
+    padding-right: 3px;
+    padding-left: 3px;
+}
+
+.fa-microphone {
+    color: #fff;
+}
+
+.mic-btn:focus {
+    /* border: 2px solid red; */
+    background-color: red;
+}

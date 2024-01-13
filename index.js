@@ -50,10 +50,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/register", checkAuthenticated, (req, res) => {
+    req.flash("adviceMessage", "Please enter your email, chose and confirm your password.")
     res.render("register.ejs", {date: date});
 });
 
 app.get("/login", checkAuthenticated, (req, res) => {
+    req.flash("failureMessage", "Please enter your email and password.");
     res.render("login.ejs", {date: date});
 });
 
@@ -149,6 +151,7 @@ app.post("/register", async (req, res) => {
                         }
                         console.log(results.rows);
                         req.flash("success_msg", "You are now registered, please login");
+                        
                         res.redirect("/login");
                     }
                 )
@@ -297,7 +300,7 @@ app.post("/editTitle", async (req, res) => {
     try {
         await pool.query("UPDATE notes SET note_title = $1 WHERE id = $2", [updatedTitle, noteId]);
         const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1 ORDER BY id ASC", [parseInt(noteId)]);
-        const listItems = await pool.query("SELECT list_item, id FROM items WHERE note_id = $1 ORDER BY id ASC", [parseInt(noteId)]);   
+        const listItems = await pool.query("SELECT list_item, id, done FROM items WHERE note_id = $1 ORDER BY id ASC", [parseInt(noteId)]);   
         res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId), message: editTitleMessage});
     } catch (error) {
         console.log(error);
