@@ -16,6 +16,13 @@
     justify-content: center;
 }
 
+.search-div {
+    width: 100%;
+    /* display: flex;
+    flex-direction: column; */
+}
+
+
 .search-form {
     background-color: transparent;
     box-shadow: none;
