@@ -59,7 +59,7 @@
     background-color: transparent;
     box-shadow: none;
     padding: 0;
-    margin: 0 auto;
+    /* margin: 0 auto; */
 }
 
 .delete-single-item {
@@ -97,7 +97,7 @@
     background-color: transparent;
     box-shadow: none;
     margin-left: 10px;
-    margin-right: 5px;
+    
     display: flex;
     align-items: center;
 }
@@ -120,4 +120,6 @@ input[type=checkbox] {
     margin: 10px;
 }
 
-
+.updatedItem {
+    width: 200px;
+}

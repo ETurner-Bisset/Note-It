@@ -55,6 +55,7 @@
                     <button id="edit<%=item.id%>" class="edit" onclick="handler('<%=item.id%>')">
                         <i class="fa-solid fa-pencil"></i>
                     </button>
+                
                     <form action="/delete" method="post" class="delete-form">
                         <input type="hidden" name="noteId" value="<%= item.note_id %>">
                         <button class="delete" type="submit" name="itemId" value="<%= item.id %>"><i class="fa-solid fa-trash"></i></button>
