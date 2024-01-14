@@ -261,14 +261,23 @@ app.post("/add", ensureAuthenticated, async (req, res) => {
     const addItemMessage = {
         message: "An item was added"
     };
+    const noItemMessage = {
+        message: "You must enter an item"
+    }
     // console.log(parseInt(noteId));
-    try {
-        pool.query("INSERT INTO items (list_item, note_id, user_id, done) VALUES ($1, $2, $3, $4)", [item, parseInt(noteId), id, done]);
+    if (item !== "") {
+        try {
+            pool.query("INSERT INTO items (list_item, note_id, user_id, done) VALUES ($1, $2, $3, $4)", [item, parseInt(noteId), id, done]);
+            const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1 ORDER BY id ASC", [parseInt(noteId)]);
+            const listItems = await pool.query("SELECT list_item, id, done FROM items WHERE note_id = $1 ORDER BY id ASC", [parseInt(noteId)]);   
+            res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId), message: addItemMessage});
+        } catch (error) {
+            console.log(error);
+        }
+    } else {
         const noteTitle = await pool.query("SELECT note_title FROM notes WHERE id = $1 ORDER BY id ASC", [parseInt(noteId)]);
-        const listItems = await pool.query("SELECT list_item, id, done FROM items WHERE note_id = $1 ORDER BY id ASC", [parseInt(noteId)]);   
-        res.render("showNote.ejs", {date: date, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId), message: addItemMessage});
-    } catch (error) {
-        console.log(error);
+        const listItems = await pool.query("SELECT list_item, id, done FROM items WHERE note_id = $1 ORDER BY id ASC", [parseInt(noteId)]);
+        res.render("showNote.ejs", {date: date, message: noItemMessage, noteTitle: noteTitle.rows[0].note_title, listItems: listItems.rows, noteId: parseInt(noteId)})
     }
 });
 
