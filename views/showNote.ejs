@@ -44,7 +44,7 @@
                     <form class="edit" action="/edit" method="post">
                         <div class="tick">
                         <input type="hidden" name="updatedItemId" value="<%= item.id %>">
-                        <input id="input<%=item.id%>" type="text" name="updatedItem" value="<%= item.list_item %>" autocomplete="off"
+                        <input id="input<%=item.id%>" type="text" class="updatedItem" name="updatedItem" value="<%= item.list_item %>" autocomplete="off"
                         autofocus="true" hidden="true" />
                         <button id="done<%=item.id%>" class="edit" type="submit" name="noteId" value="<%= noteId %>" hidden>
                             <i class="fa-solid fa-check"></i>

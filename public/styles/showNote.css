@@ -65,7 +65,7 @@
 .delete-single-item {
     display: inline-flex;
     align-items: center;
-    margin: auto 0;
+    /* margin: auto 0; */
 }
 
 .delete {
@@ -96,7 +96,8 @@
 .note-form {
     background-color: transparent;
     box-shadow: none;
-    margin: 10px;
+    margin-left: 10px;
+    margin-right: 5px;
     display: flex;
     align-items: center;
 }
@@ -118,4 +119,5 @@ input[type=checkbox] {
     padding-left: 3px;
     margin: 10px;
 }
+
 
