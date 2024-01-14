@@ -78,7 +78,6 @@ recognition.addEventListener("result", (e) => {
 <!-- edit item function -->
 <script>
     function handler(id) {
-        
         document.getElementById("item" + id).setAttribute("hidden", true)
         document.getElementById("edit" + id).setAttribute("hidden", true)
         document.getElementById("done" + id).removeAttribute("hidden")
@@ -92,19 +91,6 @@ recognition.addEventListener("result", (e) => {
         document.getElementById("inputTitle" + id).removeAttribute("hidden")
         document.getElementById("doneTitle" + id).removeAttribute("hidden")
     }
-</script>
-
-<!-- add btn event listener -->
-<script>
-    // document.addEventListener("click", function(e) {
-    //     const target = e.target.closest(".add-btn");
-    //     e.preventDefault();
-    //     if (target) {
-    //         console.log("clicked");
-    //     }
-    // })
-    
-    
 </script>
 <!-- done status of single items -->
 <script>
