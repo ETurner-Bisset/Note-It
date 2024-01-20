@@ -25,5 +25,8 @@
     "pg": "^8.11.3",
     "serve-favicon": "^2.5.0",
     "url": "^0.11.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
   }
 }
