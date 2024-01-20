@@ -13,9 +13,9 @@ export const pool = new Pool({
   database: process.env.DB_DATABASE,
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
-  // ssl:{
-  //     require: true,
-  // },
+  ssl: {
+    require: true,
+  },
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 15000,
