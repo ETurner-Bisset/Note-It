@@ -107,7 +107,20 @@ recognition.addEventListener("result", (e) => {
     setTimeout(() => {
         const messageContainer = document.querySelector(".message-container");
         messageContainer.classList.add("hidden");
-    }, 3000);
+    }, 5000);
+</script>
+<!-- Dropdown menu -->
+<script>
+    const dropdown = document.querySelector('.dropdown-toggle');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+    dropdown.addEventListener('click', (e) => {
+        dropdownMenu.classList.toggle('show');
+    });
+    window.addEventListener('click', (e) => {
+        if (e.target.id !== 'nav-id') {
+            dropdownMenu.classList.remove('show');
+        }
+    });
 </script>
 </body>
 </html>

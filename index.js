@@ -51,6 +51,40 @@ app.get('/', (req, res) => {
   res.render('index.ejs', { date: date });
 });
 
+app.get('/account', async (req, res) => {
+  const message = {
+    error: 'You must be logged in to access account information.',
+  };
+  if (!req.isAuthenticated()) {
+    res.render('login.ejs', { date: date, messages: message });
+  } else {
+    res.render('account.ejs', { date: date });
+  }
+});
+
+app.get('/settings', async (req, res) => {
+  const message = {
+    error: 'You must be logged in to access settings.',
+  };
+  if (!req.isAuthenticated()) {
+    res.render('login.ejs', { date: date, messages: message });
+  } else {
+    res.render('settings.ejs', { date: date });
+  }
+});
+
+app.get('/help', (req, res) => {
+  res.render('help.ejs', { date: date });
+});
+
+app.get('/updates', (req, res) => {
+  res.render('updates.ejs', { date: date });
+});
+
+app.get('/contact', (req, res) => {
+  res.render('contact.ejs', { date: date });
+});
+
 app.get('/register', checkAuthenticated, (req, res) => {
   req.flash(
     'adviceMessage',
@@ -618,6 +652,11 @@ function checkAuthenticated(req, res, next) {
   }
   next();
 }
+
+const profile = (req, res) => {
+  if (req.path === '/' || req.path === '/login' || req.path === '/register') {
+  }
+};
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
