@@ -1,8 +1,58 @@
 <%- include('partials/header') %>
 
-<h1>Contact Us</h1>
+<h1 class="contact-title">Contact Us</h1>
 
-<p>Waiting for updates, check back later.</p>
+<p id="result" class="text-base text-center text-gray-400"></p>
+
+<form
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  class="contact-form"
+  id="form"
+>
+  <h3>Got any feedback or questions. Fill out the form below</h3>
+  <hr class="small-underline" />
+  <input
+    type="hidden"
+    name="access_key"
+    value="1d8b2ef3-c654-4b75-9b0d-fe3a23a8c437"
+  />
+  <input type="hidden" name="subject" value="New Submission from Web3Forms" />
+  <label for="fName">First name:</label>
+  <input type="text" name="fName" class="fName" required />
+  <div class="empty-feedback text-red-400 text-sm mt-1">
+    Please provide your first name.
+  </div>
+  <label for="lName">Last name:</label>
+  <input type="text" name="lName" class="lName" required />
+  <div class="empty-feedback text-red-400 text-sm mt-1">
+    Please provide your last name.
+  </div>
+  <label for="email">Email:</label>
+  <input
+    type="email"
+    name="email"
+    id="contactEmail"
+    placeholder="name@email.com"
+    required
+  />
+  <div class="empty-feedback text-red-400 text-sm mt-1">
+    Please provide your email address.
+  </div>
+  <label for="message">Enter your message</label>
+  <textarea
+    name="message"
+    id="contactMessage"
+    placeholder="Your message here..."
+    cols="30"
+    rows="10"
+    required
+  ></textarea>
+  <div class="empty-feedback text-red-400 text-sm mt-1">
+    Please provide a message.
+  </div>
+  <button type="submit" class="btn btn-dark message-btn">Send Message</button>
+</form>
 
 <div class="main-btn-container">
   <a href="/main" class="btn btn-dark btn-lg" role="button">Back</a>

@@ -1,12 +1,28 @@
 <%- include('partials/header') %>
+<main class="account-main">
+  <h1 class="account-title">Account Information</h1>
+  <div class="account-container">
+    <p>Email: <%= userInfo.email %></p>
+    <% if (locals.message) { %>
+    <ul class="account-message">
+      <li><%= message.message %></li>
+    </ul>
+    <% } %>
+    <form action="/deleteAccount" method="post" class="delete-account-form">
+      <label for="warning"
+        ><span class="warning">WARNING </span>clicking the delete button will
+        delete your account including all notes and lists. This action is
+        irreversible! Please check the box to give your consent</label
+      >
+      <input type="checkbox" name="deleteAccount" />
+      <button class="btn btn-dark" type="submit">Delete Account</button>
+    </form>
+  </div>
 
-<h1>Account Information</h1>
-
-<p>Waiting for updates, check back later.</p>
-
-<div class="main-btn-container">
-  <a href="/main" class="btn btn-dark btn-lg" role="button">Back</a>
-  <a href="/logout" class="btn btn-dark btn-lg" role="button">Logout</a>
-</div>
+  <div class="main-btn-container">
+    <a href="/main" class="btn btn-dark btn-lg" role="button">Back</a>
+    <a href="/logout" class="btn btn-dark btn-lg" role="button">Logout</a>
+  </div>
+</main>
 
 <%- include('partials/footer') %>

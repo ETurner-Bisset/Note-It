@@ -13,6 +13,7 @@ import favicon from 'serve-favicon';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import _ from 'lodash';
+import validator from 'email-validator';
 
 ejsLint('ejs', { async: true });
 
@@ -52,13 +53,21 @@ app.get('/', (req, res) => {
 });
 
 app.get('/account', async (req, res) => {
-  const message = {
-    error: 'You must be logged in to access account information.',
-  };
-  if (!req.isAuthenticated()) {
-    res.render('login.ejs', { date: date, messages: message });
+  if (req.user === undefined) {
+    const message = {
+      error: 'You must be logged in to access account information.',
+    };
+
+    res.render('login.ejs', {
+      date: date,
+      messages: message,
+    });
   } else {
-    res.render('account.ejs', { date: date });
+    const id = req.user.id;
+    const userInfo = await pool.query('SELECT * FROM users WHERE id = $1', [
+      id,
+    ]);
+    res.render('account.ejs', { date: date, userInfo: userInfo.rows[0] });
   }
 });
 
@@ -213,6 +222,24 @@ app.post(
     failureFlash: true,
   })
 );
+
+// contact form email validation
+// app.post('/valid-email', (req, res) => {
+//   const email = req.body.email;
+
+//   if (!email) {
+//     return res.status(400).json({ error: 'Email is required' });
+//   }
+
+//   const isValid = validator.validate(email);
+
+//   if (isValid) {
+//     sendForm();
+//     return res.json({ message: 'Email is valid' });
+//   } else {
+//     return res.status(400).json({ error: 'Email is not valid' });
+//   }
+// });
 
 // show single note
 app.post('/showNote', async (req, res) => {
@@ -572,6 +599,9 @@ app.post('/delete-note', async (req, res) => {
 // Delete checked items
 app.post('/deleteCheckedItems', async (req, res) => {
   try {
+    const message = {
+      message: 'All checked off items were deleted',
+    };
     const noteId = req.body.noteId;
     const checkedItemsId = await pool.query(
       'SELECT id FROM items WHERE note_id = $1 AND done = true ',
@@ -593,7 +623,40 @@ app.post('/deleteCheckedItems', async (req, res) => {
       noteTitle: noteTitle.rows[0].note_title,
       listItems: listItems.rows,
       noteId: noteId,
+      message: message,
     });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// Delete Account
+app.post('/deleteAccount', async (req, res) => {
+  const messageDeleted = {
+    message:
+      'Your account has been deleted. Please re-register to start creating notes again.',
+  };
+  const notDeletedMsg = {
+    message: 'You must tick the checkbox to delete your account.',
+  };
+  try {
+    const userId = req.user.id;
+    const userInfo = await pool.query('SELECT * FROM users WHERE id = $1', [
+      userId,
+    ]);
+    const deleteAccount = req.body.deleteAccount;
+    if (deleteAccount === 'on') {
+      await pool.query('DELETE FROM items WHERE user_id = $1', [userId]);
+      await pool.query('DELETE FROM notes WHERE user_id = $1', [userId]);
+      await pool.query('DELETE FROM users WHERE id = $1', [userId]);
+      res.render('index.ejs', { date: date, message: messageDeleted });
+    } else {
+      res.render('account.ejs', {
+        date: date,
+        message: notDeletedMsg,
+        userInfo: userInfo.rows[0],
+      });
+    }
   } catch (error) {
     console.log(error);
   }

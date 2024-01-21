@@ -1,13 +1,21 @@
 <%- include('partials/header') %>
 <main class="home">
-    <h1 class="main-title">Note It <i class="fa-solid fa-pen-nib"></i></h1>  
-    
-<div class="container">
-    
-    <div class="home-btn-container">
-        <a href="/register" role="button" class="btn btn-light btn-lg">Register</a>
-        <a href="/login" role="button" class="btn btn-dark btn-lg">Login</a>
-    </div>
-</div>
+  <h1 class="main-title">Note It <i class="fa-solid fa-pen-nib"></i></h1>
 
-<%- include('partials/footer') %>
+  <% if (locals.message){ %>
+  <ul class="account-message">
+    <li><%= message.message %></li>
+  </ul>
+  <% } %>
+
+  <div class="container">
+    <div class="home-btn-container">
+      <a href="/register" role="button" class="btn btn-light btn-lg"
+        >Register</a
+      >
+      <a href="/login" role="button" class="btn btn-dark btn-lg">Login</a>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+</main>

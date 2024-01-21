@@ -1,0 +1,48 @@
+.contact-title {
+  margin: 20px;
+}
+
+.contact-form {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  max-width: 350px;
+  position: relative;
+  margin: 20px;
+}
+
+.contact-form label {
+  margin: 10px 0;
+}
+
+.message-btn {
+  width: 50%;
+  margin: 10px auto 0;
+}
+
+.empty-feedback {
+  color: red;
+  /* display: none; */
+}
+
+/* .invalid-feedback,
+.empty-feedback {
+  display: none;
+}
+
+.was-validated :placeholder-shown:invalid ~ .empty-feedback {
+  display: block;
+}
+
+.was-validated :not(:placeholder-shown):invalid ~ .invalid-feedback {
+  display: block;
+}
+
+.is-invalid,
+.was-validated :invalid {
+  border-color: #dc3545;
+} */

@@ -4,6 +4,7 @@
     </footer>
 </main>
 <!-- loading spinner -->
+<script src="./../../contact.js"></script>
 <script>
     document.onreadystatechange = function() {
             if (document.readyState !== "complete") {
@@ -24,19 +25,23 @@
         };
 </script>
 <script>
-// show password in register form
+// show password in register form and account info
 const input = document.getElementById("exampleInputPasswordRegister");
 const togglePassword = document.querySelector("#togglePassword")
 .addEventListener('click', (e) => {
-    // console.log("clicked");
     const type = input.getAttribute("type") === "password" ? "text" : "password";
     input.setAttribute("type", type);
     e.target.classList.toggle("fa-eye");
 });
-//    const form = document.querySelector("form");
-//     form.addEventListener('submit', function (e) {
-//         e.preventDefault();
-//     }); 
+
+const password = document.getElementById('account-password');
+const togglePassword2 = document.querySelector("#togglePassword2")
+.addEventListener('click', (e) => {
+    console.log('click');
+    const type2 = password.getAttribute("type") === "password" ? "text" : "password";
+    password.setAttribute("type", type2);
+    e.target.classList.toggle("fa-eye");
+});
 </script>
 <script>
      // Voice note feature
@@ -121,6 +126,10 @@ recognition.addEventListener("result", (e) => {
             dropdownMenu.classList.remove('show');
         }
     });
+</script>
+<!-- Validate contact form email -->
+<script>
+     
 </script>
 </body>
 </html>
